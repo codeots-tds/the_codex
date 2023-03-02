@@ -13,72 +13,79 @@ file2_excel_path = '/home/ra-terminal/datasets/job_app_data/DOB_Job_Application_
 
 """Reading CSVs"""
 data_csv_df = pd.read_csv(file1_csv_path, nrows=500)
-# print(data_csv.shape)
-
-"""Reading Excels"""
-data_excel_df = pd.read_excel(file2_excel_path,  sheet_name='DOB_Job_Application_Filings_1', nrows=500)
-data_excel2_df = pd.read_excel(file2_excel_path, sheet_name='DOB_Job_Application_Filings_2', nrows=500)
-# print(data_excel_df.shape)
-# print(data_excel2_df.shape)
-
-"""3. .shape"""
-print(data_csv_df)
-
-"""4. Get Column Names""" 
-# print(data_csv_df.columns) 
-
-"""5. Get Column Count"""
-# print(data_csv_df.shape[1])
-
-"""6. Get Row Count"""
-# print(data_csv_df.shape[0])
-
-"""7. Get Column/Row Count"""
 # print(data_csv_df.shape)
 
-"""8. Get Number of Filled Cells"""
+"""Reading Excels"""
+data_excel_df = pd.read_excel(file2_excel_path,  
+                              sheet_name='DOB_Job_Application_Filings_1', nrows=500)
+data_excel2_df = pd.read_excel(file2_excel_path, 
+                               sheet_name='DOB_Job_Application_Filings_2', nrows=500)
+# print('excel 1:', data_excel_df.shape)
+# print('excel 2:', data_excel2_df.shape)
+
+"""3. .shape"""
+# print(data_csv_df.shape)
+
+"""4. Get Column Count"""
+# print(data_csv_df.shape[1])
+
+"""5. Get Row Count"""
+# print(data_csv_df.shape[0])
+
+"""6. Get Column Names""" 
+# print(data_csv_df.columns) 
+
+"""7. Get Number of Filled Cells"""
 # print(data_csv_df.size)
 
-"""9. Get File Size"""
+"""8. Get File Size"""
 import os
 # print(os.path.getsize(file1_csv_path))
 
-"""10. Count Number of Null Values"""
+"""9. Count Number of Null Values"""
 # print(data_csv_df.isna().sum().sum())
 
-"""11. .describe()"""
+"""10. .describe()"""
+# print(data_csv_df['Borough'].describe())
+# print(data_csv_df.describe())
 
-"""12. Unique Values"""
+"""11. Unique Values"""
+# print(data_csv_df['Borough'].unique())
 
-"""13. .head()"""
-# print(data_csv_df.head())
+
+"""12. .head()"""
 # print(data_csv_df.head(10))
 
-"""14. .tail()"""
-# print(data_csv_df.head(20))
+"""13. .tail()"""
+# print(data_csv_df.tail(5))
 
-
-"""15. .columns"""
+"""14. .columns"""
 # print(data_csv_df.columns)
 
-"""16. df.info()"""
-# print(data_csv_df.info)
+"""15. df.info()"""
+# print(data_csv_df.info())
 
-"""17. Count for Distinct Values in Column"""
+"""16. Count Distinct Column Values"""
 # print(data_csv_df['Borough'].value_counts())
 
-"""18. Count Distinct Column Values"""
-# data_csv_df['Borough'].value_counts()
+"""17. Breakdown by % of Distinct Values in a Column"""
+# print(data_csv_df['Borough'].value_counts(normalize=True) * 100)
 
-"""19. Breakdown by % of Distinct Values in a Column"""
-# data_csv_df['Borough'].value_counts(normalize=True)
-
-"""20. Sort Dataframe by Column(s)"""
+"""18. Sort Dataframe by Column(s)"""
 # print(data_csv_df.sort_values(by=['Borough'], ascending=[True]))
+# print(data_csv_df.sort_values(by=['Borough','Job #'], ascending=[True,False]))
 
-# print(data_csv_df.sort_values(by=['Borough','Job #'], descending=[True,False]))
+"""19. Mean returns the Average Observation"""
+# print(data_csv_df.mean()) 
+# print(data_csv_df[data_csv_df['Borough'].mean() > 2])
 
-"""21. Mean returns the Avg Observation For a Given Column"""
-# print(data_csv_df['Borough'].mean()) #check
+"""20. Returns the Median Observation of a Given Series"""
+# print(data_csv_df.median(axis = 1))
+# print(data_csv_df['Block'].median(axis = 0, skipna = True, level = None, numeric_only=True))
 
-# print(data_csv_df[data_csv_df['Borough'] > 5].mean())
+"""21. Returns the Mode Observation of a Given Series"""
+# print(data_csv_df['Block'].mode())
+
+"""22. Standard Deviation"""
+# print(data_csv_df.std())
+print(data_csv_df['Block'].std())
