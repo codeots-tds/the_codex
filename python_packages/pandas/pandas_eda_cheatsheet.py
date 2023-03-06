@@ -4,8 +4,8 @@ import pandas as pd
 """
 1. Enter File Paths:
 """
-file1_csv_path ='/home/ra-terminal/datasets/job_app_data/DOB_Job_Application_Filings_csv.csv'
-file2_excel_path = '/home/ra-terminal/datasets/job_app_data/DOB_Job_Application_Filings_excel.xlsx' 
+file1_csv_path =''
+file2_excel_path = '' 
 
 """
 2. Reading Data
