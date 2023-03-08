@@ -1,5 +1,5 @@
 import pandas as pd
-
+import numpy as np
 """Dataframe Manipulation with Pandas Cheatsheet"""
 
 """
@@ -17,9 +17,9 @@ cols = ['School Code',	'School Name',	'School Type',	'Function',	'Contact Name',
         '7_Enrollment',	'8_Enrollment',	'9_Enrollment',	'10_Enrollment', '11_Enrollment',	
         '12_Enrollment',	'SP_Enrollment','TOTAL_Enrollment']
 """Reading CSVs"""
-# data_csv_df = pd.read_csv(file1_csv_path, nrows=500)
+# data_csv_df = pd.read_csv(file1_csv_path, nrows=1000)
 # print(len(data_csv_df.columns))
-data_csv_df = pd.read_csv(file1_csv_path, nrows=500, usecols=cols)
+data_csv_df = pd.read_csv(file1_csv_path, usecols=cols)
 # print(len(data_csv_df.columns))
 
 """Reading Excels"""
@@ -76,13 +76,13 @@ iat - Index At
 """ recheck this ---------------------
 set index - setting start index after loading df
 """
-set_idx_data_csv_df = data_csv_df.set_index('Contact Name', inplace = True)
+# set_idx_data_csv_df = data_csv_df.set_index('Contact Name', inplace = True)
 """variable = df.set_index(column name, inplace=True)"""
 # print(set_idx_data_csv_df.columns)
 
 
 """Creating a Subset of a Dataframe"""
-subset_data_df = data_csv_df[['Address 1',	'Address 2', 'Town', 'State', 
+subset_data_df = data_csv_df[['Address 1', 'Address 2', 'Town', 'State', 
                               'Zip', 'Phone', 'Fax']]
 """variable = df[['column 1', 'column 2', 'column 5', 'column 9']]"""
 # print(subset_data_df.head(5))
@@ -108,27 +108,52 @@ subset_data_df = data_csv_df[['Address 1',	'Address 2', 'Town', 'State',
 # print(data_block3['Town'] == 'Auburn')
 
 """Insert"""
-print(data_csv_df.loc[4, 'Phone'])
-# data_csv_df.insert(4, 'Phone', '718-254-9369')
+# data_csv_df.insert(8, 'Dataset Type', 'School Demographics')
 # """dataframe.insert(loc, column, value, allow_duplicates = False)"""
-# print(data_csv_df.loc[4, 'Phone'])
+# print(data_csv_df['Dataset Type'])
 
-"""17. Create New Column"""
+"""Create New Column"""
 # data_csv_df['New_Col'] = None
-# """df['column name'] = value"""
+"""df['column name'] = value"""
+# print(data_csv_df['New_Col'])
 
-"""18. Drop Duplicates"""
-# print(data_csv_df.shape[0])
-# data_csv_df.drop_duplicates(keep = 'first', inplace=True)
-# data_csv_df_not_inplace = data_csv_df.drop_duplicates(keep = 'first')
-# print(data_csv_df.shape[0])
+"""Drop Duplicates"""
+dup_list = []
+# print(data_csv_df.shape, 'first df check')
+dup_list.append(data_csv_df.loc[0:51, 
+                        f'School Code':
+                        f'TOTAL_Enrollment'])
 
+for idx, new_row in enumerate(dup_list):
+    data_csv_df2 = data_csv_df.append(new_row)
 
-"""19. Drop Column(s)"""
-# data_csv_df.drop('column name', axis=1, inplace=True)
+# print(data_csv_df2.shape, 'new df check')
+# data_csv_df2.drop_duplicates(keep= 'first', inplace = True)
+# print(data_csv_df2.shape, 'Last check after dropping duplicates.')
+
+print('Old', data_csv_df2['School Type'].shape, data_csv_df2['Town'].shape)
+sub_cols = ['School Type', 'Town']
+data_csv_df2.drop_duplicates(keep ='first', subset = sub_cols, inplace = True)
+print('after dropping dupes', data_csv_df2['School Type'].shape, 
+       data_csv_df2['Town'].shape)
+
+"""Drop Column(s)"""
+# data_csv_df.drop(columns=['Grade', 'Phone']
+# , axis=1, inplace=True)
 # print(data_csv_df.columns)
-# data_csv_df_coldrop_not_inplace = data_csv_df.drop(columns=['House #', 'Job Status']
-# , axis=1)
-# print(data_csv_df_coldrop_not_inplace.columns)
 
-"""20. .where """
+""".where """
+# df_public_schools = data_csv_df.where(data_csv_df['School Type']=='Public School')
+# print(df_public_schools
+#       [['School Code','School Type', 'School Name', 'State', 'Phone']].head(5))
+
+# district_list = ['Agawam', 'Abington', 'Abby Kelley Foster Charter Public (District)', 
+#         'Benjamin Banneker Charter Public (District)', 
+#         'Phoenix Charter Academy (District)', 'Bentley Academy Charter School (District)', 
+#         'Excel Academy Charter (District)']
+
+# filter1 = data_csv_df['School Type']=='Public School'
+# filter2 = data_csv_df['District Name'].isin(district_list)
+# df_public_schools = data_csv_df.where(filter1 & filter2)
+# print(df_public_schools
+#       [['School Code','School Type', 'School Name', 'State', 'Phone']].head(20))
